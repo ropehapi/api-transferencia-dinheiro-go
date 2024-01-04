@@ -6,3 +6,5 @@
 - É preciso pensar na possibilidade de concorrência de transferências onde duas pessoas tranferem dinheiro ao mesmo tempo para uma terceira.
 - Se uma transferência falhar, o saldo do usuário de origem deve ser restaurado.
 - Não é necessário endpoints para criar usuários, popule o banco de forma com que os dois usuários existam e que transferências possam ser feitas entre eles.
+
+> sudo docker run --name mysql_container -e MYSQL_ROOT_PASSWORD=Pedroka0123 -d mysql
