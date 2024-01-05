@@ -2,17 +2,29 @@ package database
 
 import (
 	"database/sql"
-	"os"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/mattn/go-sqlite3"
 )
 
-func GetConn() (*sql.DB, error) {
-	conn, err := sql.Open(os.Getenv("DB_DRIVER"), os.Getenv("CONN_STRING"))
-
+func GetConnSQLite() (*sql.DB, error) {
+	db, err := sql.Open("sqlite3", "./db_api_transferencia_dinheiro_go.db")
 	if err != nil {
 		return nil, err
 	}
 
-	return conn, err
+	return db, nil
+}
+
+func AutoMigrate(conn *sql.DB) {
+	stmt, err := conn.Prepare("CREATE TABLE IF NOT EXISTS accounts (customer_id BIGINT(19) NULL DEFAULT NULL,balance FLOAT NULL DEFAULT NULL)")
+	if err != nil {
+		panic(err)
+	}
+
+	stmt, err = conn.Prepare("INSERT INTO accounts (customer_id, balance) VALUES(1, 5000)")
+	if err != nil {
+		panic(err)
+	}
+
+	stmt.Exec()
 }
